@@ -760,8 +760,8 @@ status_t CameraService::Client::setOverlay() {
 #else
     params.getPreviewSize(&w, &h);
 #endif
-
-#ifdef BOARD_USE_FROYO_LIBCAMERA
+#if 0
+#ifdef BOARD_USE_FROYO_LIBCAMERA 
     //for 720p recording , preview can be 800X448
     if(w == preview_sizes[0].width && h==preview_sizes[0].height){
         LOGD("Changing overlay dimensions to 768X432 for 720p recording.");
@@ -769,7 +769,7 @@ status_t CameraService::Client::setOverlay() {
         h = preview_sizes[1].height;
     }
 #endif
-
+#endif
 #ifdef OMAP_ENHANCEMENT
 
     ///Query the current preview pixel format from Camera HAL to create the overlay
@@ -1286,7 +1286,9 @@ status_t CameraService::Client::sendCommand(int32_t cmd, int32_t arg1, int32_t a
         case CAMERA_CMD_SET_DISPLAY_ORIENTATION:
             // The orientation cannot be set during preview.
             if (mHardware->previewEnabled()) {
-                return INVALID_OPERATION;
+	    		LOGE("CAMERA_CMD_SET_DISPLAY_ORIENTATION with preview enabled!!!");
+			
+                return OK;
             }
             // Mirror the preview if the camera is front-facing.
             orientation = getOrientation(arg1, mCameraFacing == CAMERA_FACING_FRONT);
@@ -1294,6 +1296,7 @@ status_t CameraService::Client::sendCommand(int32_t cmd, int32_t arg1, int32_t a
 
             if (mOrientation != orientation) {
                 mOrientation = orientation;
+				LOGE("mOrientation=%d",mOrientation);
                 if (mOverlayRef != 0) mOrientationChanged = true;
             }
             return OK;

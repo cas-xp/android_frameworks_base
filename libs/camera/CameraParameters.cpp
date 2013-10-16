@@ -43,6 +43,7 @@ const char CameraParameters::KEY_SUPPORTED_PICTURE_FORMATS[] = "picture-format-v
 const char CameraParameters::KEY_JPEG_THUMBNAIL_WIDTH[] = "jpeg-thumbnail-width";
 const char CameraParameters::KEY_JPEG_THUMBNAIL_HEIGHT[] = "jpeg-thumbnail-height";
 const char CameraParameters::KEY_SUPPORTED_JPEG_THUMBNAIL_SIZES[] = "jpeg-thumbnail-size-values";
+const char CameraParameters::KEY_SUPPORT_DIFF_AUTOFOCUS_POSITION[] = "jpeg-support-diff-autofocus-values";
 const char CameraParameters::KEY_JPEG_THUMBNAIL_QUALITY[] = "jpeg-thumbnail-quality";
 const char CameraParameters::KEY_JPEG_QUALITY[] = "jpeg-quality";
 const char CameraParameters::KEY_ROTATION[] = "rotation";
@@ -199,7 +200,7 @@ const char CameraParameters::KEY_SUPPORTED_FACE_DETECTION[] = "face-detection-va
 const char CameraParameters::KEY_SCENE_DETECT[] = "scene-detect";
 const char CameraParameters::KEY_SUPPORTED_SCENE_DETECT[] = "scene-detect-values";
 
-const char CameraParameters::KEY_SELECTABLE_ZONE_AF[] = "selectable-zone-af";
+const char CameraParameters::KEY_AUTOFOCUS_POSITION[] = "selectable-zone-af";
 const char CameraParameters::KEY_SUPPORTED_SELECTABLE_ZONE_AF[] = "selectable-zone-af-values";
 const char CameraParameters::KEY_SHUTTER_SOUND[] = "shutter-sound";
 const char CameraParameters::KEY_BRIGHTNESS_MODE[] = "brightness-mode";
@@ -250,7 +251,7 @@ const char CameraParameters::LENSSHADE_DISABLE[] = "disable";
 
 //Values for Continuous AF
 const char CameraParameters::CAF_OFF[] = "caf-off";
-const char CameraParameters::CAF_ON[] = "caf-on";
+const char CameraParameters::KEY_EV[] = "caf-on";
 //Same, for CodeAurora-based blobs
 const char CameraParameters::CONTINUOUS_AF_OFF[] = "caf-off";
 const char CameraParameters::CONTINUOUS_AF_ON[] = "caf-on";

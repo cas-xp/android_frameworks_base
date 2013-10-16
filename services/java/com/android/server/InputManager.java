@@ -80,6 +80,7 @@ public class InputManager {
     private static native void nativeGetInputConfiguration(Configuration configuration);
     private static native int[] nativeGetInputDeviceIds();
     private static native String nativeDump();
+	private static int HWROTATION=0;
     
     // Input event injection constants defined in InputDispatcher.h.
     static final int INPUT_EVENT_INJECTION_SUCCEEDED = 0;
@@ -119,11 +120,13 @@ public class InputManager {
     private void init() {
         Slog.i(TAG, "Initializing input manager");
         nativeInit(mCallbacks);
+		HWROTATION = SystemProperties.getInt("ro.sf.hwrotation", 0)/90;
     }
     
     public void start() {
         Slog.i(TAG, "Starting input manager");
         nativeStart();
+		setDisplayOrientation(0,0);
     }
     
     public void setDisplaySize(int displayId, int width, int height) {
@@ -144,8 +147,8 @@ public class InputManager {
         
         if (DEBUG) {
             Slog.d(TAG, "Setting display #" + displayId + " orientation to " + rotation);
-        }
-        nativeSetDisplayOrientation(displayId, rotation);
+        }//(rotation+HWROTATION) % 4
+        nativeSetDisplayOrientation(displayId, (rotation+HWROTATION) % 4);
     }
     
     public void getInputConfiguration(Configuration config) {

@@ -373,7 +373,10 @@ public class CmStatusBarView extends StatusBarView {
                 e=getEntryByPid(current.pid);
             if(e!=null){
                 ComponentName c=getActivityForApp(current);
-                if(c==null || (c.compareTo(e.Activity)==0)){
+                if(c==null || e.Activity==null ||
+				e.Activity.getPackageName()==null || 
+				e.Activity.getClassName()==null ||
+				(c.compareTo(e.Activity)==0)){
                     if(DEBUG) Slog.i(TAG, "HideButtonEnabler - currentFgApp[NAME/PID/ACTIVITY]: " + current.processName +
                             "/" + current.pid + "/" + c.toShortString() + " Retrieved Entry[NAME/PID/ACTIVITY]:"
                             + e.ProcessInfo.processName + "/" + e.ProcessInfo.pid + "/" + e.Activity.toShortString());

@@ -234,7 +234,7 @@ static sp<MediaSource> InstantiateSoftwareCodec(
 #undef FACTORY_REF
 #undef FACTORY_CREATE
 
-#if defined(OMAP_ENHANCEMENT) || defined(OMAP_COMPAT)
+#if defined(OMAP_ENHANCEMENT) || defined(OMAP_COMPAT) || defined(TARGET_OMAP3)
 #ifdef TARGET_OMAP4
 //Enable Ducati Codecs for Video, PV SW codecs for Audio
 static const CodecInfo kDecoderInfo[] = {
@@ -269,7 +269,7 @@ static const CodecInfo kEncoderInfo[] = {
     { MEDIA_MIMETYPE_VIDEO_H263, "OMX.TI.DUCATI1.VIDEO.MPEG4E" },
     { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.TI.DUCATI1.VIDEO.H264E" },
 };
-#elif defined(TARGET_OMAP3)
+#else //if defined(TARGET_OMAP3)
 static const CodecInfo kDecoderInfo[] = {
     { MEDIA_MIMETYPE_IMAGE_JPEG, "OMX.TI.JPEG.decoder" },
     { MEDIA_MIMETYPE_AUDIO_MPEG, "OMX.TI.MP3.decode" },
@@ -314,6 +314,8 @@ static const CodecInfo kEncoderInfo[] = {
 };
 #endif
 #else
+#error "2here!!"
+
 static const CodecInfo kDecoderInfo[] = {
     { MEDIA_MIMETYPE_IMAGE_JPEG, "OMX.TI.JPEG.decoder" },
     { MEDIA_MIMETYPE_AUDIO_MPEG, "OMX.Nvidia.mp3.decoder" },
@@ -636,7 +638,7 @@ uint32_t OMXCodec::getComponentQuirks(const char *componentName, bool isEncoder)
         quirks |= kDefersOutputBufferAllocation;
         quirks |= kDoesNotRequireMemcpyOnOutputPort;
     }
-#if defined(OMAP_ENHANCEMENT) || defined(OMAP_COMPAT)
+#if defined(OMAP_ENHANCEMENT) || defined(OMAP_COMPAT) ||defined(TARGET_OMAP3)
     if (!strcmp(componentName, "OMX.TI.Video.Decoder") ||
             !strcmp(componentName, "OMX.TI.720P.Decoder")) {
         // TI Video Decoder and TI 720p Decoder must use buffers allocated
@@ -1596,19 +1598,20 @@ static size_t getFrameSize(
 
 status_t OMXCodec::findTargetColorFormat(
         const sp<MetaData>& meta, OMX_COLOR_FORMATTYPE *colorFormat) {
-    LOGV("findTargetColorFormat");
+    LOGI("findTargetColorFormat, mComponentName=%s",mComponentName);
     CHECK(mIsEncoder);
 
     *colorFormat = OMX_COLOR_FormatYUV420SemiPlanar;
     int32_t targetColorFormat;
     if (meta->findInt32(kKeyColorFormat, &targetColorFormat)) {
         *colorFormat = (OMX_COLOR_FORMATTYPE) targetColorFormat;
-    } else {
+		//LOGI("findTargetColorFormat with colorFormat=%d", *colorFormat);
+    } //else {
         if (!strcasecmp("OMX.TI.Video.encoder", mComponentName) ||
             !strcasecmp("OMX.TI.720P.Encoder", mComponentName)) {
             *colorFormat = OMX_COLOR_FormatYCbYCr;
         }
-    }
+    //}
 
     // Check whether the target color format is supported.
     return isColorFormatSupported(*colorFormat, kPortIndexInput);

@@ -162,6 +162,7 @@ public:
     // in EXIF.
     // Example value: "512x384,320x240,0x0". Read only.
     static const char KEY_SUPPORTED_JPEG_THUMBNAIL_SIZES[];
+    static const char KEY_SUPPORT_DIFF_AUTOFOCUS_POSITION[];
     // The quality of the EXIF thumbnail in Jpeg picture. The range is 1 to 100,
     // with 100 being the best.
     // Example value: "90". Read/write.
@@ -376,7 +377,7 @@ public:
     static const char KEY_SUPPORTED_FACE_DETECTION[];
 
     //Continuous AF.
-    static const char KEY_SELECTABLE_ZONE_AF[];
+    static const char KEY_AUTOFOCUS_POSITION[];
     static const char KEY_SUPPORTED_SELECTABLE_ZONE_AF[];
 
     static const char KEY_SHUTTER_SOUND[];
@@ -529,7 +530,7 @@ public:
 
     // Values for Continuous AF
     static const char CAF_OFF[] ;
-    static const char CAF_ON[] ;
+    static const char KEY_EV[] ;
     // Proprietaries from CodeAurora use these...
     static const char CONTINUOUS_AF_OFF[] ;
     static const char CONTINUOUS_AF_ON[] ;
